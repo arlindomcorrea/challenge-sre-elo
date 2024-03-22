@@ -1,0 +1,105 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-sre-challenge-app
+  namespace: challenge
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: sre-challenge-app
+  minReplicas: 1
+  maxReplicas: 1
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+
+---
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sre-challenge-app
+  namespace: challenge
+spec:
+  selector:
+    matchLabels:
+      app: sre-challenge-app
+  template:
+    metadata:
+      labels:
+        app: sre-challenge-app
+    spec:
+     containers:
+       - name: sre-challenge-app
+         image: arlindomcorrea/sre-challenge-elo:v1
+         ports:
+          - containerPort: 8081
+         env:
+          - name: MYSQL_DATABASE
+            value: emp
+          - name: MYSQL_PASSWORD
+            value: "12345678"
+            #valueFrom:
+            #    secretKeyRef:
+            #      name: creds-sre-challenge
+            #      key: password
+          - name: MYSQL_USER
+            value: "12345678"
+            #valueFrom:
+            #secretKeyRef:
+            #name: creds-sre-challenge
+            #key: username
+          - name: DATABASE_ROOT_PASSWORD
+            value: "12345678"
+            #valueFrom:
+            #secretKeyRef:
+            #name: creds-sre-challenge
+            #key: password
+         resources:
+            limits:
+              memory: 500Mi
+              cpu: 600m
+            requests:
+              memory: 400Mi
+              cpu: 300m
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: sre-challenge-service
+  namespace: challenge
+spec:
+  selector:
+    app: sre-challenge-app
+  ports:
+  - port: 8081
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-sre-challenge-service
+  namespace: challenge
+spec:
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  selector:
+    app: sre-challenge-app
+  ports:
+    - name: appport
+      nodePort: 30808
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+  sessionAffinity: None
+  type: NodePort
+

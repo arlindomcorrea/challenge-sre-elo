@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysqldb
+  namespace: challenge
+spec:
+  selector:
+    matchLabels:
+      app: mysqldb
+  template:
+    metadata:
+      labels:
+        app: mysqldb
+    spec:
+      containers:
+        - name: mysqldb
+          image: mysql:8.0.23
+          imagePullPolicy: Always
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "12345678"
+              #valueFrom:
+              #  secretKeyRef:
+              #    name: creds-sre-challenge
+              #    key: password
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value:
+            - name: MYSQL_RANDOM_ROOT_PASSWORD
+              value:
+            - name: MYSQL_DATABASE
+              value: emp
+              #- name: MYSQL_USER
+              #value: root
+            - name: MYSQL_PASSWORD
+              value: "12345678"
+              #valueFrom:
+              #  secretKeyRef:
+              #    name: creds-sre-challenge
+              #    key: password
+          resources:
+            limits:
+              memory: 1000Mi
+              cpu: 600m
+            requests:
+              memory: 800Mi
+              cpu: 300m
+          ports:
+            - containerPort: 3306
+              name: mysqldb
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+ name: mysqldb-service
+ namespace: challenge
+spec:
+ selector:
+  app: mysqldb
+ ports:
+  - port: 3306

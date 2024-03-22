@@ -1,0 +1,33 @@
+version: "3.5"
+
+networks:
+  rotten_net:
+            driver: bridge
+
+services:
+
+  db:
+    image: mysql:8.0.23
+    restart: always
+    networks:
+      - rotten_net
+    environment:
+      - MYSQL_DATABASE=EMP
+      - MYSQL_PASSWORD=12345678
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+    ports:
+      - 3306:3306
+
+  web:
+    image: arlindomcorrea/sre-challenge-elo:v1
+    restart: always
+    networks:
+      - rotten_net
+    depends_on:
+      db:
+        condition: service_started
+    ports:
+      - 8081:8080
+    environment:
+      - MYSQL_USER=root
+      - DATABASE_ROOT_PASSWORD=12345678      
