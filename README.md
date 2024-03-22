@@ -262,18 +262,18 @@ Sinta-se à vontade para expressar seus pensamentos e compartilhar suas experiê
 Requisitos
 O que você faria para melhorar essa configuração e torná-la “pronta para produção”?
 
-# Vejo a necessidade de levar o banco para uma instancia apartada do cluster, sugestão seria levar para um serviço gerenciado na AWS ou AZURE, porque questões de boas práticas, performance, escalabidade e disponibilidade.
+Vejo a necessidade de levar o banco para uma instancia apartada do cluster, sugestão seria levar para um serviço gerenciado na AWS ou AZURE, porque questões de boas práticas, performance, escalabidade e disponibilidade.
 
-# Colocaria no mínimo 3 nodes no cluster para conseguir subir replicas dos pods da aplicação e conseguir resiliência, escalabilidade e disponibilidade, além de melhorar a orquestração e conseguir ganhos em termos de Self-healing que o k8s nos proporciona.
+Colocaria no mínimo 3 nodes no cluster para conseguir subir replicas dos pods da aplicação e conseguir resiliência, escalabilidade e disponibilidade, além de melhorar a orquestração e conseguir ganhos em termos de Self-healing que o k8s nos proporciona.
 
-# A parte da seguranção é um item priorizado, sem essa parte aplicada é impossível subir a solução para produção.
+A parte da seguranção é um item priorizado, sem essa parte aplicada é impossível subir a solução para produção.
 
-# Realizaria um teste de carga com alguma ferramenta disponivel e colocaria um nível mínimo de Observabilidade com Traces, Métricas e logs e monitores de golden signals trafego, latência, erros e saturação, com alertas estrategicos para sermos avisados de intercorrências em produção.
+Realizaria um teste de carga com alguma ferramenta disponivel e colocaria um nível mínimo de Observabilidade com Traces, Métricas e logs e monitores de golden signals trafego, latência, erros e saturação, com alertas estrategicos para sermos avisados de intercorrências em produção.
 
 Existem 2 microsserviços mantidos por 2 equipes diferentes. Cada equipe deve ter acesso apenas ao seu serviço dentro do cluster. Como você abordaria isso?
 Como você evitaria que outros serviços em execução no cluster se comunicassem com o sre-challenge-app?
 
-# Para os acesso apartado os serviços poderiam rodar em namespaces diferentes e poderiamos subir roles diferencias para cada equipe portar a sua role com os devidos limites. Para a questão da comunicação, podemos seguir com a estrategia de apartar os serviços em namespaces diferentes e ainda utilizar SGs para limitar o trafego de ingress e egress.
+Para os acesso apartado os serviços poderiam rodar em namespaces diferentes e poderiamos subir roles diferencias para cada equipe portar a sua role com os devidos limites. Para a questão da comunicação, podemos seguir com a estrategia de apartar os serviços em namespaces diferentes e ainda utilizar SGs para limitar o trafego de ingress e egress.
 
 
 ## O que é importante para nós?
