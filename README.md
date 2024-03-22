@@ -24,12 +24,12 @@ Nesse repositório, fornecemos a você:
 
 - 'sre-challenge-app/': Uma aplicação com CRUD que armazena dados de funcionários em um Banco de dados MySQL 8.
 
-### Configure o ambiente do desafio
+## Configure o ambiente do desafio
 
 1. Instale qualquer cluster K8s local (ex: Minikube) em sua máquina e documente sua configuração, para que possamos executar sua solução.
 
 
-### Instalação Minikube
+## Instalação Minikube
 
 Configuração mínima local para rodar:
 
@@ -44,7 +44,7 @@ Devido a uma limitação de HW tive que subir o cluster com um node e toda a sol
 Em produção o mínimo para subir um cluster k8s são 3 nodes.
 
 
-### Garantir que o Docker esteja no ar:
+## Garantir que o Docker esteja no ar:
 
 $sudo systemctl start docker
 $sudo systemclt status docker
@@ -62,7 +62,7 @@ $minikube version
 $minikube start
 
 
-### Ao chegar no final, se tudo ocorrer bem vai visualizar uma mensagem como esta:
+## Ao chegar no final, se tudo ocorrer bem vai visualizar uma mensagem como esta:
 
 * Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
 
@@ -73,7 +73,7 @@ NAME       STATUS   ROLES           AGE   VERSION
 minikube   Ready    control-plane   41m   v1.28.3
 
 
-### Parte 1 - Configure os aplicativos
+## Parte 1 - Configure os aplicativos
 
 Gostariamos que essa aplicação sre-challenge-app e seu banco de dados fossem executados em um cluster K8s.
 
@@ -82,7 +82,7 @@ Requisitos
 1. A aplicação deve ser acessível de fora do cluster.
 2. Manifestos de implantação do kubernetes para executar com limitação de requests e usando HPA.
 
-### Subindo o mysql com docker-compose para teste:
+## Subindo o mysql com docker-compose para teste:
 
 $docker-compose up -d
 
@@ -100,7 +100,7 @@ Neste ponto tive que adicionar a rede para comunicação interna entre aplicaç�
  - Com isso o mysql subiu e foi possível rodar um #docker container ls para garantir que estava no ar.
 
 
-### Build da aplicação
+## Build da aplicação
 # Dentro do diretorio raiz do projeto:
 
  1 - $docker build -t arlindomcorrea/sre-challange-elo:v1 .
@@ -119,14 +119,14 @@ $curl localhost:8080 (chamando a url/porta da aplicação)
 
 Vai visualizar os containers que estão no ar com seus respectivos nomes.
 
-### Teste UP/Down do docker-compose
+## Teste UP/Down do docker-compose
 $docker-compose up -d (Sobe todos os containers declarados exibindo o nome do container com o status "Started"
 $docker-compose down baixa todos os containers novamente.
 
 
-### Iniciando a implementação do k8s com o Minikube
+## Iniciando a implementação do k8s com o Minikube
 
-### Crie um diretório local para fazer o git clone e organizar os projetos localmente
+## Crie um diretório local para fazer o git clone e organizar os projetos localmente
 #Para fazer o git clone via ssh é necessário criar uma chave ssh da seguinte forma:
 
 $ssh-keygen -t ed25519 -C "<email@git>"
@@ -210,13 +210,13 @@ Foi realizado o upload da imagem para o Docker Hub de forma publica.
  
 
 
-### Criando um namespace para subir o ambiente
+## Criando um namespace para subir o ambiente
 
 $kubectl create ns challenge
 
 
 
-### Parte 2 - Corrigir o problema
+## Parte 2 - Corrigir o problema
 
 A aplicação tem um problema. Encontre e corrija! Você saberá que corrigiu o problema quando o estado dos pods no namespaces for semelhante a este:
 
@@ -231,7 +231,7 @@ Requisitos
 Escreva aqui sobre o problema, a solução, como você a encontrou e qualquer outra coisa que queira compartilhar sobre ela.
 
 
-### Resultado do troubleshooting da aplicação
+## Resultado do troubleshooting da aplicação
 
 [osboxes@osboxes k8s]$ kubectl get pods -n challenge
 NAME                                READY   STATUS    RESTARTS         AGE
@@ -242,7 +242,7 @@ Durante o lab encontrei diversos problemas e fui corrigindo conforme a detecçã
 
 Com isso refiz o build, atualizei o registry e a aplicação subiu normalmente.
 
-### Parte 3 - Melhores práticas
+## Parte 3 - Melhores práticas
 
 Essa aplicação tem uma falha de segurança e gostariamos que as credenciais do MYSQL fossem armazenadas em uma secret do Kubernetes.
 
@@ -255,7 +255,7 @@ Requisitos
 # Como não subi o kind de Secrets o properties foi mantido sem alteração, entendo a falha de segurança, porém a atividade está em andamento e priorizada.
 # Foi necessário quebrar a atividade devido as intercorrencias encontradas pelo caminho.
 
-### Parte 4 - Perguntas
+## Parte 4 - Perguntas
 
 Sinta-se à vontade para expressar seus pensamentos e compartilhar suas experiências com exemplos do mundo real com os quais você trabalhou no passado.
 
