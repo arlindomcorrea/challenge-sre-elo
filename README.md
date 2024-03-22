@@ -49,7 +49,7 @@ Em produção o mínimo para subir um cluster k8s são 3 nodes.
 $sudo systemctl start docker
 $sudo systemclt status docker
 ```
-## Instalação do Minikube (k8s)
+## Proceddimento de instalação do Minikube (k8s)
 ```
 $cd /tmp
 
