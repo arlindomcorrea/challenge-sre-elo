@@ -163,12 +163,13 @@ drwxrwxr-x. 2 osboxes osboxes  101 Mar 22 07:34 .
 drwxrwxr-x. 6 osboxes osboxes  249 Mar 22 09:34 ..
 [osboxes@osboxes k8s]$
 ```
+```
  1 -       web.yaml - app
  2 -     mysql.yaml - DB
  3 -  mysql-pv.yaml - Vol.DB
  4 - mysql-pvc.yaml - Req. Vol.DB
  5 -     creds.yaml - Secrets (não habilitado)
-
+```
 
 # Deployment Mysql
 
