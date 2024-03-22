@@ -32,20 +32,20 @@ Nesse repositório, fornecemos a você:
 ## Instalação Minikube
 
 Configuração mínima local para rodar:
-
+```
 Processamento: 2 core;
 Memória: 6 GB;
 HD: 50 GB.
 Oracle Virtual Box com CentOS Linux 8, imagem pronta (osboxes) para lab.
 Server: Docker Engine - Community Version:24.0.6
-
+```
 
 Devido a uma limitação de HW tive que subir o cluster com um node e toda a solução foi configurada setando recursos unicos mas, apenas para efeito de lab.
 Em produção o mínimo para subir um cluster k8s são 3 nodes.
 
 
 ## Garantir que o Docker esteja no ar:
-
+```
 $sudo systemctl start docker
 $sudo systemclt status docker
 
@@ -60,18 +60,18 @@ $sudo mv ./minikube /usr/local/bin/minikube
 $minikube version
 
 $minikube start
-
+```
 
 ## Ao chegar no final, se tudo ocorrer bem vai visualizar uma mensagem como esta:
 
 * Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
 
 Para validar, rode o seguinte comando e veja se a saída será próxima disso:
-
+```
 [osboxes@osboxes k8s]$ kubectl get nodes
 NAME       STATUS   ROLES           AGE   VERSION
 minikube   Ready    control-plane   41m   v1.28.3
-
+```
 
 ## Parte 1 - Configure os aplicativos
 
@@ -87,11 +87,11 @@ Requisitos
 $docker-compose up -d
 
 Neste ponto tive que adicionar a rede para comunicação interna entre aplicação e banco de dados e declarar a rede para os serviços:
-
+```
 #networks:
 #  rotten_net:
 #            driver: bridge
-
+```
 
  - Remoção da váriavel de usuário root do bloco "environment" pois, após a primeira subinda do banco é validado se no deployment foi passado variável com usuário root, sendo considerado falta grave de segurança.
 
@@ -128,25 +128,26 @@ $docker-compose down baixa todos os containers novamente.
 
 ## Crie um diretório local para fazer o git clone e organizar os projetos localmente
 #Para fazer o git clone via ssh é necessário criar uma chave ssh da seguinte forma:
-
+```
 $ssh-keygen -t ed25519 -C "<email@git>"
 $ssh-add path/id_ed25519
 $cat path//id_ed25519.pub
-
+```
 Cadastrar a chave nas configurações de chave ssh do git.
 
 #Criei a seguinte estrutura local, para baixar o projeto:
-
+```
 $mkdir /home/osboxes/ELO-SRE
 $git clone git@github.com:ELO-SRE/sre-challenge-elo.git
-
+```
 
 # O diretorio k8s é onde estão os manifestos do cluster.
-
+```
 /home/osboxes/ELO-SRE/sre-challenge-elo
 [osboxes@osboxes sre-challenge-elo]$ ls
 ca.jpg  docker-compose.yml  Dockerfile  k8s  mvnw  mvnw.cmd  pom.xml  README.md  src
-
+```
+```
 [osboxes@osboxes k8s]$ pwd
 /home/osboxes/ELO-SRE/sre-challenge-elo/k8s
 [osboxes@osboxes k8s]$ ls -larth
@@ -159,7 +160,7 @@ total 20K
 drwxrwxr-x. 2 osboxes osboxes  101 Mar 22 07:34 .
 drwxrwxr-x. 6 osboxes osboxes  249 Mar 22 09:34 ..
 [osboxes@osboxes k8s]$
-
+```
  1 -       web.yaml - app
  2 -     mysql.yaml - DB
  3 -  mysql-pv.yaml - Vol.DB
@@ -232,12 +233,12 @@ Escreva aqui sobre o problema, a solução, como você a encontrou e qualquer ou
 
 
 ## Resultado do troubleshooting da aplicação
-
+```
 [osboxes@osboxes k8s]$ kubectl get pods -n challenge
 NAME                                READY   STATUS    RESTARTS         AGE
 mysqldb-66cdbc7cc9-jzk9d            1/1     Running   1 (106m ago)     3h11m
 sre-challenge-app-99b9f4cb6-qbd96   1/1     Running   12 (5m23s ago)   54m
-
+```
 Durante o lab encontrei diversos problemas e fui corrigindo conforme a detecção e requisitos, porém, em um momento que tentei subir a APP peguei nos logs do pod conflito de porta com o apache, usei o comando netstat para identificar o conflito e tomei a decisão de alterar a porta da aplicação de 8080 para 8081.
 
 Com isso refiz o build, atualizei o registry e a aplicação subiu normalmente.
