@@ -248,12 +248,12 @@ Essa aplicação tem uma falha de segurança e gostariamos que as credenciais do
 
 Requisitos
 1. Manifesto do kubernetes usando a API de secret com as credenciais do Banco para implantação.
-# Deixei essa atividade em backlog para continuar com mais calma devido a problemas de indisponibilidade do cluster, crashs e demais problemas enfrentados durante o lab. Porém, o kind de Secret já está configurado e as variáveis setadas, restando apenas subir e testar.
+Deixei essa atividade em backlog para continuar com mais calma devido a problemas de indisponibilidade do cluster, crashs e demais problemas enfrentados durante o lab. Porém, o kind de Secret já está configurado e as variáveis setadas, restando apenas subir e testar.
 2. Manifesto do kunernetes da aplicação com as informações da secret criada anteriormente.
-# Mantive apenas um manifesto criado, porém, desabilitado para continuar o setup nas próximas horas.
+Mantive apenas um manifesto criado, porém, desabilitado para continuar o setup nas próximas horas.
 3. Configuração do código da aplicação utilizando uma variável que foi referenciada no secrets do K8s (Application Properties do Java)
-# Como não subi o kind de Secrets o properties foi mantido sem alteração, entendo a falha de segurança, porém a atividade está em andamento e priorizada.
-# Foi necessário quebrar a atividade devido as intercorrencias encontradas pelo caminho.
+Como não subi o kind de Secrets o properties foi mantido sem alteração, entendo a falha de segurança, porém a atividade está em andamento e priorizada.
+Foi necessário quebrar a atividade devido as intercorrencias encontradas pelo caminho.
 
 ## Parte 4 - Perguntas
 
